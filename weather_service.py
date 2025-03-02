@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 KAFKA_BROKER = "localhost:9092"  # Update if needed
 TOPIC = "weather_topic"
-API_KEY = "your_openweather_api_key"
+API_KEY = "899160d969afb3ae536a23fd63cfffff"
 CITY = "London"
 
 producer = KafkaProducer(
