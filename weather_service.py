@@ -2,12 +2,12 @@ from flask import Flask, jsonify
 import requests
 import json
 from kafka import KafkaProducer
-
+import os
 app = Flask(__name__)
 
-KAFKA_BROKER = "localhost:9092"  # Update if needed
+KAFKA_BROKER = os.getenv("KAFKA_BROKER", "kafka:9092")  
+API_KEY = os.getenv("API_KEY", "your_default_fallback_key")  
 TOPIC = "weather_topic"
-API_KEY = "899160d969afb3ae536a23fd63cfffff"
 CITY = "London"
 
 producer = KafkaProducer(
