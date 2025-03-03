@@ -3,4 +3,4 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
-CMD ["python", "weather_service.py"]
+CMD ["gunicorn", "-b", "0.0.0.0:5001", "weather_service:app"]
