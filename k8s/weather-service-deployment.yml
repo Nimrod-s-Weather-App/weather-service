@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather-service
+  template:
+    metadata:
+      labels:
+        app: weather-service
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: weather-service
+          image: ghcr.io/nimrod-s-weather-app/weather-service:latest
+          ports:
+            - containerPort: 5001
+          env:
+            - name: KAFKA_BROKER
+              value: "kafka:9092"
+            - name: API_KEY
+              value: "d61f6140b64e3fe3bf5ed1a2cf7a411c"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: weather-service
+spec:
+  selector:
+    app: weather-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5001
+  type: LoadBalancer
