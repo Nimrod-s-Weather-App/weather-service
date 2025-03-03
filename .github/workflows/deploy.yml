@@ -1,4 +1,4 @@
-name: Deploy - Weather Service
+name: deploy - weather service
 
 on:
   push:
