@@ -1,0 +1,15 @@
+replicaCount: 1
+
+image:
+  repository: weather-service
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 8080
+
+argocd:
+  repoURL: "https://github.com/Nimrod-s-weather-app/weather-service.git"
+  targetRevision: "master"
+  path: "k8s"
+  destinationNamespace: "default"
