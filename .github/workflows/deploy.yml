@@ -30,10 +30,14 @@ jobs:
           docker push ${{ secrets.GHCR_REPO }}:${{ github.sha }}
           # Pushing the image with commit hash as the tag
 
-      - name: Update Helm chart with new image tag
+      - name: Install jq
         run: |
-          sudo apt-get install -y sed
-          sed --version
+          sudo apt-get update
+          sudo apt-get install -y jq
+          jq --version
+
+      - name: Display GITHUB_WORKSPACE and files
+        run: |
           echo "GITHUB_WORKSPACE is: ${{ github.workspace }}"
           echo "Listing files in ${{ github.workspace }}"
           ls ${{ github.workspace }}
@@ -41,7 +45,12 @@ jobs:
           ls ${{ github.workspace }}/charts
           echo "Listing files in ${{ github.workspace }}/charts/weather-service"
           ls ${{ github.workspace }}/charts/weather-service
-          sed "" 's|tag: "latest"|tag: "${{ github.sha }}"|g' ${{ github.workspace }}/charts/weather-service/values.yaml
+
+      - name: Update image tag in values.yaml using jq
+        run: |
+          echo "Updating image tag in values.yaml using jq"
+          jq '.image.tag = "${{ github.sha }}"' ${{ github.workspace }}/charts/weather-service/values.yaml > ${{ github.workspace }}/charts/weather-service/values.yaml.new
+          mv ${{ github.workspace }}/charts/weather-service/values.yaml.new ${{ github.workspace }}/charts/weather-service/values.yaml
 
       - name: Commit and push updated values.yaml
         run: |
