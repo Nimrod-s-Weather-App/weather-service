@@ -1,13 +1,10 @@
 replicaCount: 1
-
 image:
   repository: ghcr.io/nimrod-s-weather-app/weather-notifications-service
-  tag: latest # overridden in the pipeline
-
+  tag: 59d8ec47756f79f7a5645deb604e6d3cc4306e4a # overridden in the pipeline
 service:
   type: ClusterIP
   port: 8080
-
 argocd:
   repoURL: "https://github.com/Nimrod-s-weather-app/weather-service.git"
   targetRevision: "master"
