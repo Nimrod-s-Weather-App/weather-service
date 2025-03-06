@@ -34,7 +34,9 @@ jobs:
         run: |
           echo "GITHUB_WORKSPACE is: ${{ github.workspace }}"
           echo "Listing files in ${{ github.workspace }}"
-          ls -l ${{ github.workspace }}
+          ls ${{ github.workspace }}
+          ls ${{ github.workspace }}/charts
+          ls ${{ github.workspace }}/charts/weather-service
           sed -i "" 's|tag: "latest"|tag: "${{ github.sha }}"|g' ${{ github.workspace }}/charts/weather-service/values.yaml
 
       - name: Commit and push updated values.yaml
