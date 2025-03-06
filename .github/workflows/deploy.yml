@@ -30,12 +30,6 @@ jobs:
           docker push ${{ secrets.GHCR_REPO }}:${{ github.sha }}
           # Pushing the image with commit hash as the tag
 
-      - name: Install yq
-        run: |
-          sudo wget https://github.com/mikefarah/yq/releases/download/v4.14.0/yq_linux_amd64 -O /usr/local/bin/yq
-          sudo chmod +x /usr/local/bin/yq
-          yq --version
-
       - name: Display GITHUB_WORKSPACE and files
         run: |
           echo "GITHUB_WORKSPACE is: ${{ github.workspace }}"
