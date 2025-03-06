@@ -30,7 +30,13 @@ jobs:
           docker push ${{ secrets.GHCR_REPO }}:${{ github.sha }}
           # Pushing the image with commit hash as the tag
 
-      - name: Display GITHUB_WORKSPACE and files
+      - name: Install yq
+        run: |
+          sudo wget https://github.com/mikefarah/yq/releases/download/v4.14.0/yq_linux_amd64 -O /usr/local/bin/yq
+          sudo chmod +x /usr/local/bin/yq
+          yq --version
+
+      - name: Update image tag in values.yaml using yq
         run: |
           echo "GITHUB_WORKSPACE is: ${{ github.workspace }}"
           echo "Listing files in ${{ github.workspace }}"
@@ -39,16 +45,13 @@ jobs:
           ls ${{ github.workspace }}/charts
           echo "Listing files in ${{ github.workspace }}/charts/weather-service"
           ls ${{ github.workspace }}/charts/weather-service
-
-      - name: Update image tag in values.yaml using yq
-        run: |
-          echo "Updating image tag in values.yaml using yq"
           yq eval '.image.tag = strenv(GITHUB_SHA)' -i ${{ github.workspace }}/charts/weather-service/values.yaml
 
       - name: Commit and push updated values.yaml
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
+          git remote set-url origin https://github.com/${{ github.repository }}.git
           git add ${{ github.workspace }}/charts/weather-service/values.yaml
           git commit -m "Update image tag to ${{ github.sha }}"
-          git push
+          git push https://x-access-token:${{ secrets.GHCR_PASSWORD }}@github.com/${{ github.repository }}.git HEAD:master
