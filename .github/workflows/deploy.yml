@@ -32,6 +32,8 @@ jobs:
 
       - name: Update Helm chart with new image tag
         run: |
+          sudo apt-get install -y sed
+          sed --version
           echo "GITHUB_WORKSPACE is: ${{ github.workspace }}"
           echo "Listing files in ${{ github.workspace }}"
           ls ${{ github.workspace }}
@@ -39,7 +41,7 @@ jobs:
           ls ${{ github.workspace }}/charts
           echo "Listing files in ${{ github.workspace }}/charts/weather-service"
           ls ${{ github.workspace }}/charts/weather-service
-          sed -i "" 's|tag: "latest"|tag: "${{ github.sha }}"|g' ${{ github.workspace }}/charts/weather-service/values.yaml
+          sed "" 's|tag: "latest"|tag: "${{ github.sha }}"|g' ${{ github.workspace }}/charts/weather-service/values.yaml
 
       - name: Commit and push updated values.yaml
         run: |
