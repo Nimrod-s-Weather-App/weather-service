@@ -32,7 +32,8 @@ jobs:
 
       - name: Update Helm chart with new image tag
         run: |
-          sed -i "" 's|tag: "latest"|tag: "${{ github.sha }}"|g' $GITHUB_WORKSPACE/charts/weather-service/values.yaml
+          echo "${{ github.workspace }}"
+          sed -i "" 's|tag: "latest"|tag: "${{ github.sha }}"|g' ${{ github.workspace }}/charts/weather-service/values.yaml
 
       - name: Commit and push updated deployment YAML
         run: |
