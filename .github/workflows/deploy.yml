@@ -32,12 +32,12 @@ jobs:
 
       - name: Update Helm chart with new image tag
         run: |
-          sed -i 's|tag: "latest"|tag: "${{ github.sha }}"|g' ./charts/weather-service/values.yaml
+          sed -i "" 's|tag: "latest"|tag: "${{ github.sha }}"|g' $GITHUB_WORKSPACE/charts/weather-service/values.yaml
 
       - name: Commit and push updated deployment YAML
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add ./charts/weather-service/templates/weather-service-deployment.yml
+          git add ./charts/weather-service/values.yaml
           git commit -m "Update image tag to ${{ github.sha }}"
           git push
