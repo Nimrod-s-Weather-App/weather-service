@@ -33,8 +33,10 @@ jobs:
       - name: Update Helm chart with new image tag
         run: |
           echo "GITHUB_WORKSPACE is: ${{ github.workspace }}"
+          echo "Listing files in ${{ github.workspace }}"
+          ls -l ${{ github.workspace }}
           sed -i "" 's|tag: "latest"|tag: "${{ github.sha }}"|g' ${{ github.workspace }}/charts/weather-service/values.yaml
-          
+
       - name: Commit and push updated values.yaml
         run: |
           git config --global user.name "github-actions"
