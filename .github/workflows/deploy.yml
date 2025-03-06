@@ -38,6 +38,6 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add ./charts/weather-service/templates/notifications-service-deployment.yml
+          git add ./charts/weather-service/templates/weather-service-deployment.yml
           git commit -m "Update image tag to ${{ github.sha }}"
           git push
