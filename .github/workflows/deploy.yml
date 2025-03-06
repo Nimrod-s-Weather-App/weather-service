@@ -30,11 +30,11 @@ jobs:
           docker push ${{ secrets.GHCR_REPO }}:${{ github.sha }}
           # Pushing the image with commit hash as the tag
 
-      - name: Install jq
+      - name: Install yq
         run: |
-          sudo apt-get update
-          sudo apt-get install -y jq
-          jq --version
+          sudo wget https://github.com/mikefarah/yq/releases/download/v4.14.0/yq_linux_amd64 -O /usr/local/bin/yq
+          sudo chmod +x /usr/local/bin/yq
+          yq --version
 
       - name: Display GITHUB_WORKSPACE and files
         run: |
@@ -46,11 +46,10 @@ jobs:
           echo "Listing files in ${{ github.workspace }}/charts/weather-service"
           ls ${{ github.workspace }}/charts/weather-service
 
-      - name: Update image tag in values.yaml using jq
+      - name: Update image tag in values.yaml using yq
         run: |
-          echo "Updating image tag in values.yaml using jq"
-          jq '.image.tag = "${{ github.sha }}"' ${{ github.workspace }}/charts/weather-service/values.yaml > ${{ github.workspace }}/charts/weather-service/values.yaml.new
-          mv ${{ github.workspace }}/charts/weather-service/values.yaml.new ${{ github.workspace }}/charts/weather-service/values.yaml
+          echo "Updating image tag in values.yaml using yq"
+          yq eval '.image.tag = strenv(GITHUB_SHA)' -i ${{ github.workspace }}/charts/weather-service/values.yaml
 
       - name: Commit and push updated values.yaml
         run: |
