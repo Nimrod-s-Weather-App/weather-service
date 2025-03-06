@@ -35,7 +35,9 @@ jobs:
           echo "GITHUB_WORKSPACE is: ${{ github.workspace }}"
           echo "Listing files in ${{ github.workspace }}"
           ls ${{ github.workspace }}
+          echo "Listing files in ${{ github.workspace }}/charts"
           ls ${{ github.workspace }}/charts
+          echo "Listing files in ${{ github.workspace }}/charts/weather-service"
           ls ${{ github.workspace }}/charts/weather-service
           sed -i "" 's|tag: "latest"|tag: "${{ github.sha }}"|g' ${{ github.workspace }}/charts/weather-service/values.yaml
 
