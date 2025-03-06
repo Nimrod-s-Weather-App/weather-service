@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: weather-service
-  tag: latest
+  repository: ghcr.io/nimrod-s-weather-app/weather-notifications-service
+  tag: latest # overridden in the pipeline
 
 service:
   type: ClusterIP
@@ -12,4 +12,4 @@ argocd:
   repoURL: "https://github.com/Nimrod-s-weather-app/weather-service.git"
   targetRevision: "master"
   path: "k8s"
-  destinationNamespace: "default"
+  destinationNamespace: "weather-service"

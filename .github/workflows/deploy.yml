@@ -1,13 +1,13 @@
-name: deploy - weather service
+name: deploy - weather notifications service
 
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
-  workflow_dispatch: 
+      - master
+  workflow_dispatch:  # Allows manual trigger
 
 jobs:
   build-and-push:
@@ -22,8 +22,21 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.GHCR_REPO }}:latest .
+          docker build -t ${{ secrets.GHCR_REPO }}:${{ github.sha }} .
+          # Tagging image with commit hash using github.sha
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.GHCR_REPO }}:latest
+          docker push ${{ secrets.GHCR_REPO }}:${{ github.sha }}
+          # Pushing the image with commit hash as the tag
+
+      - - name: Update Helm chart with new image tag
+          run: |
+            sed -i 's|tag: "latest"|tag: "${{ github.sha }}"|g' ./charts/weather-service/values.yaml
+      - name: Commit and push updated deployment YAML
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add ./charts/weather-notifications-service/templates/notifications-service-deployment.yml
+          git commit -m "Update image tag to ${{ github.sha }}"
+          git push

@@ -29,9 +29,16 @@ def get_weather():
 @app.route("/publish-weather", methods=["POST"])
 def publish_weather():
     """Fetch weather data and publish it to Kafka."""
-    weather_data = fetch_weather()
-    producer.send(TOPIC, weather_data)
-    return jsonify({"message": "Weather data published to Kafka"})
+    try:
+        weather_data = fetch_weather()
+        print(f"Fetched weather data: {weather_data}")  # Log the fetched data
+        producer.send(TOPIC, weather_data)
+        producer.flush()  # Ensure the message is actually sent
+        print(f"Weather data sent to Kafka topic {TOPIC}")
+        return jsonify({"message": "Weather data published to Kafka"})
+    except Exception as e:
+        print(f"Error in publishing weather data: {e}")  # Log the error message
+        return jsonify({"error": str(e)}), 500  # Return the error message in the response
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001, debug=True)

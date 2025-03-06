@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: weather-service
-          image: ghcr.io/nimrod-s-weather-app/weather-service:latest
+          image: ghcr.io/nimrod-s-weather-app/weather-service:{{ .Values.image.tag }} # Dynamic tag
           ports:
             - containerPort: 5001
           env:
