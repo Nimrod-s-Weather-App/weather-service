@@ -30,9 +30,10 @@ jobs:
           docker push ${{ secrets.GHCR_REPO }}:${{ github.sha }}
           # Pushing the image with commit hash as the tag
 
-      - - name: Update Helm chart with new image tag
-          run: |
-            sed -i 's|tag: "latest"|tag: "${{ github.sha }}"|g' ./charts/weather-service/values.yaml
+      - name: Update Helm chart with new image tag
+        run: |
+          sed -i 's|tag: "latest"|tag: "${{ github.sha }}"|g' ./charts/weather-service/values.yaml
+          
       - name: Commit and push updated deployment YAML
         run: |
           git config --global user.name "github-actions"
