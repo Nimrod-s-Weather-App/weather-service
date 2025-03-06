@@ -52,7 +52,3 @@ jobs:
           git add ${{ github.workspace }}/charts/weather-service/values.yaml
           git commit -m "Update image tag to ${{ github.sha }}"
           git push https://x-access-token:${{ secrets.GHCR_PASSWORD }}@github.com/${{ github.repository }}.git HEAD:master
-        - name: Checkout repository
-          uses: actions/checkout@v3
-          with:
-            token: ${{ secrets.GHCR_PASSWORD }}
