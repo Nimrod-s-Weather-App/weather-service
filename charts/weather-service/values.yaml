@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/nimrod-s-weather-app/weather-notifications-service
-  tag: 3d1b1a13d3eaba9ee478012f0045ef8bd4ade8be # overridden in the pipeline
+  tag: b3f9f9121072f24028f0e86b71097c54a8a38591 # overridden in the pipeline
 service:
   type: ClusterIP
   port: 8080
