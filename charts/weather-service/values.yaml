@@ -1,11 +1,8 @@
-replicaCount: 1  
-
+replicaCount: 1
 image:
-  repository: ghcr.io/nimrod-s-weather-app/weather-notifications-service  # Docker image repository
-  tag: 9326f0896dc636347849318b6e94fe5c0afad230  # Image tag (can be overridden in the pipeline)
-
+  repository: ghcr.io/nimrod-s-weather-app/weather-notifications-service # Docker image repository
+  tag: addcf934800f816586d4f58b725fe94e93377d01 # Image tag (can be overridden in the pipeline)
 service:
-  type: ClusterIP  
-  port: 8080  
-  targetPort: 5001  
-
+  type: ClusterIP
+  port: 8080
+  targetPort: 5001
