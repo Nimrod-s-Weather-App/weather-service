@@ -1,11 +1,10 @@
 replicaCount: 1
 image:
   repository: ghcr.io/nimrod-s-weather-app/weather-service # Docker image repository
-  tag: e107cda9a06d8c6685fa6f781c1e4e029e9d8229 # Image tag (can be overridden in the pipeline)
+  tag: 2572b164cb228e1cf5a6c868eeb994dca7a13bd1 # Image tag (can be overridden in the pipeline)
 service:
   type: ClusterIP
   port: 8080
   targetPort: 5001
-  
 kafkaBroker: "kafka.weather-infra.svc.cluster.local:9092"
 apiKey: "d61f6140b64e3fe3bf5ed1a2cf7a411c"
