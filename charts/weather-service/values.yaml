@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/nimrod-s-weather-app/weather-service # Docker image repository
-  tag: 2572b164cb228e1cf5a6c868eeb994dca7a13bd1 # Image tag (can be overridden in the pipeline)
+  tag: 93f393d41c62e492d5ce0ee906959c3635bebb02 # Image tag (can be overridden in the pipeline)
 service:
   type: ClusterIP
   port: 8080
