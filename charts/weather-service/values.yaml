@@ -6,3 +6,6 @@ service:
   type: ClusterIP
   port: 8080
   targetPort: 5001
+
+KAFKA_BROKER: "kafka.weather-infra.svc.cluster.local:9092"
+apiKey: "d61f6140b64e3fe3bf5ed1a2cf7a411c"
