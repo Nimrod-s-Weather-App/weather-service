@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-service
+  namespace: {{ .Release.Namespace }}  
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: weather-service
+  template:
+    metadata:
+      labels:
+        app: weather-service
+    spec:
+      containers:
+        - name: weather-service
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"  
+          ports:
+            - containerPort: 5001
+          env:
+            - name: KAFKA_BROKER
+              value: "{{ .Values.kafkaBroker }}"
+            - name: API_KEY
+              value: "{{ .Values.apiKey }}"
